@@ -53,7 +53,7 @@
   Returns `nil`"
   [^js parent-node]
   (when (node? parent-node)
-    (loop [pn parent-node]
-      (when-let [last-child (last-child pn)]
-        (remove-child pn last-child)
-        (recur pn)))))
+    (loop []
+      (when-let [last-child (last-child parent-node)]
+        (remove-child parent-node last-child)
+        (recur)))))
