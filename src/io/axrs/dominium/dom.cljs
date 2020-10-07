@@ -19,7 +19,7 @@
   [^js e]
   (instance? js/Element e))
 
-(defn find-first
+(defn find-first-element
   "Finds the first `Element` within the document that matches the selector or group of selectors.
   `nil` if no matches are found"
   [selector]
