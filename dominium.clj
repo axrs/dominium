@@ -32,9 +32,6 @@
   (println "Building docs")
   (lein/resolve-and-apply (project) ["codox"]))
 
-(println (git-dirty?))
-
 (shuck/with-print-out
   (apply prospect/run *ns* *command-line-args*)
   (shuck/done))
-
