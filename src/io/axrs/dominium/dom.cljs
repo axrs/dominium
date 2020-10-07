@@ -2,9 +2,9 @@
   (:require
     [clojure.string :as str]))
 
-(def ^:private ^:dynamic *self* js/self)
+(def ^:private ^:dynamic ^:no-doc *self* js/self)
 
-(defn- valid-selector? [v]
+(defn- ^:no-doc valid-selector? [v]
   (and (string? v)
        (not (str/blank? v))))
 
