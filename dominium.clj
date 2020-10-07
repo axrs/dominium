@@ -22,9 +22,13 @@
 
 (defn deps
   "Installs project dependencies"
-  []
-  (println "Installing Dependencies")
-  (lein/resolve-and-apply (project) ["deps"]))
+  ([]
+   (println "Installing Dependencies")
+   (lein/resolve-and-apply (project) ["deps"]))
+  ([arg]
+   {:pre [(contains? #{":tree"} arg)]}
+   (println "Installing Dependencies" arg)
+   (lein/resolve-and-apply (project) ["deps" arg])))
 
 (defn docs
   "Rebuilds documentation against the latest codebase"
