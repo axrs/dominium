@@ -1,0 +1,28 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: jesiio/build-bus:latest
+        user: node
+
+    working_directory: ~/project
+
+    environment:
+      JVM_OPTS: -Xmx3200m
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "project.clj" }}
+
+      - run: ./dominium.clj deps
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: v1-dependencies-{{ checksum "project.clj" }}
+
+      - run: ./dominium.clj docs
+      - run: ./dominium.clj abort-if-git-dirty
+

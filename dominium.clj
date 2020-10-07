@@ -14,7 +14,7 @@
 (def ^:private repo (delay (load-repo *cwd*)))
 
 (defn- git-dirty? []
-  (every? (comp some? seq) (vals (git-status @repo))))
+  (some (comp some? seq) (vals (git-status @repo))))
 
 (defn- project []
   (-> "project.clj"
@@ -35,6 +35,10 @@
   []
   (println "Building docs")
   (lein/resolve-and-apply (project) ["codox"]))
+
+(defn abort-if-git-dirty []
+  (when (git-dirty?)
+    (throw (ex-info "Uncommitted working files" (git-status @repo)))))
 
 (shuck/with-print-out
   (apply prospect/run *ns* *command-line-args*)
