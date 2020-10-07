@@ -56,6 +56,4 @@
     (loop []
       (when-let [last-child (last-child parent-node)]
         (remove-child parent-node last-child)
-        (recur parent-node)))))
-
-(defn dirty [])
+        (recur)))))
