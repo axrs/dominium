@@ -9,14 +9,12 @@
   '[io.axrs.prospect.core :as prospect]
   '[io.axrs.shuck.core :as shuck]
   '[leiningen.core.main :as lein]
-  '[leiningen.core.project :as project]
-  '[leiningen.deps :as lein-deps]
-  '[leiningen.do :as lein-do])
+  '[leiningen.core.project :as project])
 
 (def ^:private repo (delay (load-repo *cwd*)))
 
 (defn- git-dirty? []
-  (some (comp some? seq) (git-status @repo)))
+  (every? (comp some? seq) (vals (git-status @repo))))
 
 (defn- project []
   (-> "project.clj"
@@ -26,7 +24,7 @@
   "Installs project dependencies"
   []
   (println "Installing Dependencies")
-  (lein-deps/deps (project)))
+  (lein/resolve-and-apply (project) ["deps"]))
 
 (defn docs
   "Rebuilds documentation against the latest codebase"
